@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Youtube Music</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_playlists">Playlists</string>
+    <string name="title_my_songs">My Songs</string>
+    <string name="title_search">Search</string>
+</resources>

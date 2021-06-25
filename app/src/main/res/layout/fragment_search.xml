@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingRight="20dp">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/search_button"
+            android:layout_toLeftOf="@id/search_button" />
+
+        <ImageView
+            android:id="@+id/search_button"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_baseline_search_24"
+            app:tint="@color/black" />
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/searchRecyclerView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:context=".ui.search.SearchFragment"
+        tools:itemCount="5"
+        tools:listitem="@layout/card_item_songs" />
+
+</LinearLayout>
+
+

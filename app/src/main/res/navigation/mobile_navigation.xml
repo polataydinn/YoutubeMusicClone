@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_search">
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.youtubemusic.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_my_songs"
+        android:name="com.example.youtubemusic.ui.mysongs.MySongsFragment"
+        android:label="@string/title_my_songs"
+        tools:layout="@layout/fragment_my_songs" />
+
+    <fragment
+        android:id="@+id/navigation_playlists"
+        android:name="com.example.youtubemusic.ui.playlists.PlaylistsFragment"
+        android:label="@string/title_playlists"
+        tools:layout="@layout/fragment_playlists" />
+</navigation>

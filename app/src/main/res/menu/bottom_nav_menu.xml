@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/title_search" />
+
+    <item
+        android:id="@+id/navigation_my_songs"
+        android:icon="@drawable/ic_baseline_music_note_24"
+        android:title="@string/title_my_songs" />
+
+    <item
+        android:id="@+id/navigation_playlists"
+        android:icon="@drawable/ic_baseline_playlist_play_24"
+        android:title="@string/title_playlists" />
+
+</menu>
