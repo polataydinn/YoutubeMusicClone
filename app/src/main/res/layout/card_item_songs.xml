@@ -2,33 +2,33 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:orientation="horizontal"
-    android:layout_height="320dp"
-    >
-
+    tools:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="200"
         app:cardElevation="10dp"
         android:layout_gravity="center">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="215dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/songThumbNail"
                     android:layout_width="match_parent"
-                    android:layout_height="215dp"
+                    android:layout_height="250dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/polat"
                     android:tintMode="src_atop"
@@ -52,18 +52,21 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="60dp"
+                    android:id="@+id/downloadButton"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:src="@drawable/ic_baseline_cloud_download_24" />
 
                 <ImageView
-                    android:layout_width="60dp"
+                    android:id="@+id/playButton"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_baseline_play_arrow_24" />
 
                 <ImageView
-                    android:layout_width="60dp"
+                    android:id="@+id/addToPlaylistButton"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:src="@drawable/ic_baseline_playlist_add_24" />

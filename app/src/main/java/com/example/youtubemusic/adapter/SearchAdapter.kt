@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.youtubemusic.databinding.CardItemSongsBinding
 import com.example.youtubemusic.models.Item
 
-class SearchAdapter(val onItemClickListener: (Int) -> Unit) : ListAdapter<Item,SearchViewHolder>(DiffCallBack()){
+class SearchAdapter(val onItemClickListener: (Int,Int) -> Unit) : ListAdapter<Item,SearchViewHolder>(DiffCallBack()){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {

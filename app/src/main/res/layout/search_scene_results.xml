@@ -6,33 +6,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingTop="10dp"
-        android:paddingStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:paddingEnd="16dp">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
-        <EditText
-            android:id="@+id/searchEditText"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/custom_input"
-            android:inputType="text"
-            android:maxLines="1"
-            android:paddingStart="20dp"
-            tools:text="polat alemdar" />
+            android:paddingTop="10dp">
 
-        <ImageView
-            android:id="@+id/search_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="right|center"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_baseline_search_24"
-            app:tint="@color/black" />
-    </FrameLayout>
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_input" />
+
+            <ImageView
+                android:id="@+id/search_button"
+                android:layout_width="43dp"
+                android:layout_gravity="right"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_baseline_search_24"
+                app:tint="@color/black" />
+        </FrameLayout>
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
