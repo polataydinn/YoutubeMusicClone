@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.youtubemusic"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -76,4 +76,10 @@ dependencies {
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //youtubeExtractor
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
 }

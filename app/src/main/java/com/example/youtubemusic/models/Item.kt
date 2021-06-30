@@ -11,5 +11,6 @@ data class Item(
     @SerializedName("kind")
     val kind: String?,
     @SerializedName("snippet")
-    val snippet: Snippet?
+    val snippet: Snippet?,
+    val isRotating: Boolean = false
 )
