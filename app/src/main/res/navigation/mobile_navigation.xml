@@ -9,17 +9,35 @@
         android:id="@+id/navigation_search"
         android:name="com.example.youtubemusic.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_play_song"
+            app:destination="@id/navigation_play_song" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_my_songs"
         android:name="com.example.youtubemusic.ui.mysongs.MySongsFragment"
         android:label="@string/title_my_songs"
-        tools:layout="@layout/fragment_my_songs" />
+        tools:layout="@layout/fragment_my_songs">
+        <action
+            android:id="@+id/action_navigation_my_songs_to_navigation_play_song"
+            app:destination="@id/navigation_play_song" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_playlists"
         android:name="com.example.youtubemusic.ui.playlists.PlaylistsFragment"
         android:label="@string/title_playlists"
-        tools:layout="@layout/fragment_playlists" />
+        tools:layout="@layout/fragment_playlists">
+        <action
+            android:id="@+id/action_navigation_playlists_to_navigation_play_song"
+            app:destination="@id/navigation_play_song" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_play_song"
+        android:name="com.example.youtubemusic.ui.playsong.PlaySongFragment"
+        android:label="@string/title_play_song"
+        tools:layout="@layout/fragment_play_song" />
 </navigation>

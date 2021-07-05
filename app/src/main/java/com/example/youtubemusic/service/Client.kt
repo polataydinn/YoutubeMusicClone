@@ -22,21 +22,7 @@ object Client {
 
     }
 
-    val retrofit2 by lazy {
-        Retrofit.Builder()
-            .baseUrl(getDownloadLinkBaseUrl)
-            .client(
-                OkHttpClient.Builder()
-                    .build()
-            )
-            .addConverterFactory(GsonConverterFactory.create()).build()
-    }
-
     val api: ApiService by lazy {
         retrofit.create(ApiService::class.java)
-    }
-
-    val api2: ApiService by lazy {
-        retrofit2.create(ApiService::class.java)
     }
 }

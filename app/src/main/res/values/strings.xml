@@ -6,4 +6,7 @@
     <string name="title_playlists">Playlists</string>
     <string name="title_my_songs">My Songs</string>
     <string name="title_search">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_play_song">Play Song</string>
 </resources>

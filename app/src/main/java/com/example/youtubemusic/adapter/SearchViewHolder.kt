@@ -6,6 +6,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.youtubemusic.constant.Const
 import com.example.youtubemusic.databinding.CardItemSongsBinding
 import com.example.youtubemusic.models.Item
+import com.example.youtubemusic.R
 
 
 class SearchViewHolder(private val binding: CardItemSongsBinding) :
@@ -30,8 +31,10 @@ class SearchViewHolder(private val binding: CardItemSongsBinding) :
         binding.songThumbnail.animation = Const.rotationAnimation
         if (item.isRotating){
             binding.songThumbnail.startAnimation(Const.rotationAnimation)
+            binding.play.setImageResource(R.drawable.ic_baseline_pause_24)
         } else {
             binding.songThumbnail.clearAnimation()
+            binding.play.setImageResource(R.drawable.ic_baseline_play_arrow_24)
         }
     }
 }

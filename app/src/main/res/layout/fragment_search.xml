@@ -21,6 +21,7 @@
             android:background="@drawable/custom_input"
             android:inputType="text"
             android:maxLines="1"
+            android:imeOptions="actionSearch"
             android:paddingStart="20dp"
             tools:text="polat alemdar" />
 

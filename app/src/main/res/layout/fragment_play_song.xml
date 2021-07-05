@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1F1F2D"
-    tools:context=".ui.mysongs.MySongsFragment">
+    tools:context=".ui.playsong.PlaySongFragment">
 
 
     <ImageView
@@ -20,6 +20,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="25dp"
+        android:layout_marginTop="65dp"
         android:progress="50"
         android:progressTint="#E89AA6"
         android:layout_marginEnd="25dp"
@@ -31,19 +32,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#E89AA6"
-        android:text="0:00"
+        tools:text="0:00"
         android:layout_below="@id/progressBar"
-        android:layout_marginStart="40dp"/>
+        android:layout_marginStart="25dp"/>
 
     <TextView
         android:id="@+id/totalSongTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#E89AA6"
-        android:text="2:25"
+        tools:text="2:25"
         android:layout_below="@id/progressBar"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"/>
+        android:layout_marginEnd="25dp"/>
 
     <ImageView
         android:id="@+id/songPlayButton"
@@ -87,7 +88,6 @@
         android:layout_marginTop="48dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="40dp"/>
-
 
 
 </RelativeLayout>
