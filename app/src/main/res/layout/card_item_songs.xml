@@ -36,7 +36,7 @@
         android:layout_height="@dimen/button_size"
         android:elevation="10dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_baseline_play_arrow_24" />
+        android:src="@drawable/ic_baseline_play_arrow_24_white" />
 
     <ImageView
         android:id="@+id/add_playlist"

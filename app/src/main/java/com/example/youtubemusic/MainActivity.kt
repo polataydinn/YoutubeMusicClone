@@ -3,19 +3,30 @@ package com.example.youtubemusic
 import android.Manifest
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.example.youtubemusic.R
+import com.example.youtubemusic.interfaces.PassDataInterface
+import com.example.youtubemusic.models.Item
+import com.example.youtubemusic.ui.search.SearchFragment
+import com.example.youtubemusic.ui.search.SearchFragmentDirections
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PassDataInterface {
+
+    private var item : Item? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +35,17 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
         setUserPermission()
+        val bottomPlayer : RelativeLayout = findViewById(R.id.bottomPlayerController)
+        bottomPlayer.visibility = INVISIBLE
+
+        bottomPlayer.setOnClickListener {
+            bottomPlayer.visibility = INVISIBLE
+            item?.let { it1 ->
+                SearchFragmentDirections.actionNavigationSearchToNavigationPlaySong(
+                    it1
+                )
+            }?.let { it2 -> navController.navigate(it2) }
+        }
     }
 
     private fun setUserPermission() {
@@ -36,9 +58,7 @@ class MainActivity : AppCompatActivity() {
                     if (report.areAllPermissionsGranted()) {
                     }
 
-                    // check for permanent denial of any permission
                     if (report.isAnyPermissionPermanentlyDenied) {
-                        // show alert dialog navigating to Settings
                         showSettingsDialog()
                     }
                 }
@@ -60,6 +80,8 @@ class MainActivity : AppCompatActivity() {
             .check()
     }
 
+
+
     private fun showSettingsDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(baseContext)
         builder.setTitle("Need Permissions")
@@ -71,6 +93,10 @@ class MainActivity : AppCompatActivity() {
         builder.setNegativeButton("Cancel",
             DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
         builder.show()
+    }
+
+    override fun onDataRecieved(item: Item) {
+        this.item = item
     }
 
 }
