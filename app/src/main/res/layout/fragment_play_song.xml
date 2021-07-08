@@ -56,14 +56,16 @@
         android:layout_centerHorizontal="true"/>
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_baseline_skip_previous_24"
+        android:id="@+id/previousSong"
+        android:layout_width="45dp"
+        android:layout_height="42dp"
         android:layout_below="@id/currentSongTime"
+        android:layout_marginStart="115dp"
         android:layout_marginTop="36dp"
-        android:layout_marginStart="115dp"/>
+        android:src="@drawable/ic_baseline_skip_previous_24" />
 
     <ImageView
+        android:id="@+id/nextSong"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_baseline_skip_next_24"
@@ -73,6 +75,7 @@
         android:layout_marginEnd="115dp"/>
 
     <ImageView
+        android:id="@+id/replaySong"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:src="@drawable/ic_baseline_repeat_24"
@@ -81,6 +84,7 @@
         android:layout_marginStart="40dp"/>
 
     <ImageView
+        android:id="@+id/favoriteSong"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:src="@drawable/ic_baseline_favorite_border_24"

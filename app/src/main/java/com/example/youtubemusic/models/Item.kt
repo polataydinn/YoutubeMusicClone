@@ -17,5 +17,6 @@ data class Item(
     @SerializedName("snippet")
     val snippet: @RawValue Snippet?,
     val isRotating: Boolean = false,
-    val isResumed: Boolean = false
+    val isResumed: Boolean = false,
+    val isFavorite: Boolean = false
 ) : Parcelable

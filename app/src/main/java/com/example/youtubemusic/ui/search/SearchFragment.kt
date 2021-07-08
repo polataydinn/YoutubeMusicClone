@@ -1,6 +1,5 @@
 package com.example.youtubemusic.ui.search
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -9,8 +8,6 @@ import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import at.huber.youtubeExtractor.VideoMeta
 import at.huber.youtubeExtractor.YouTubeExtractor
@@ -23,22 +20,20 @@ import android.view.KeyEvent
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.youtubemusic.MainActivity
 import com.example.youtubemusic.R
 import com.example.youtubemusic.interfaces.PassDataInterface
 import com.example.youtubemusic.models.Item
+import com.example.youtubemusic.ui.base.BaseFragment
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
-    private val BASEURL = "https://www.youtube.com/watch?v="
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: SearchAdapter
-    private val player: MediaPlayer = MediaPlayer()
     private lateinit var passDataInterface: PassDataInterface
 
     override fun onCreateView(
@@ -54,6 +49,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SearchAdapter { position, case ->
+            (activity as MainActivity).position = position
             val list = ArrayList(adapter.currentList)
             val item = list[position]
             passDataInterface.onDataRecieved(item)
@@ -62,7 +58,7 @@ class SearchFragment : Fragment() {
 
                 }
                 1 -> {
-                    playSong(list, position)
+                    playSong(list, position,adapter,requireContext())
                     val image = activity?.findViewById<ImageView>(R.id.bottomSongImage)
                     val bottomPlayer: RelativeLayout =
                         activity?.findViewById(R.id.bottomPlayerController)!!
@@ -101,73 +97,8 @@ class SearchFragment : Fragment() {
     private fun getListOfSearch() {
         val songName = binding.searchEditText.text.toString()
         Request.getSongs(songName) {
+            (activity as MainActivity).listOfSongs = it
             adapter.submitList(it)
-        }
-    }
-
-
-    private fun getYoutubeDownloader(youtubeLink: String, onResponse: (String) -> Unit) {
-        object : YouTubeExtractor(requireContext()) {
-            override fun onExtractionComplete(
-                ytFiles: SparseArray<YtFile>?,
-                videoMeta: VideoMeta?
-            ) {
-
-                if (ytFiles == null) {
-                    return
-                } else {
-                    val itag = 140
-                    val downloadUrl = ytFiles.get(itag).url
-                    onResponse(downloadUrl)
-                }
-            }
-
-        }.extract(youtubeLink, true, true)
-    }
-
-    private fun playSong(list: ArrayList<Item>, position: Int) {
-        if (!player.isPlaying) {
-            val currentVideoLink = BASEURL + list[position].id?.videoId
-            getYoutubeDownloader(currentVideoLink) { audioUrl ->
-                if (list[position].isResumed == true) {
-                    player.start()
-                }
-                player.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                if (player.isPlaying == false && list[position].isResumed == false) {
-                    try {
-                        player.setDataSource(audioUrl)
-                        player.prepare()
-                        player.start()
-                        if (player.isPlaying) {
-                            for ((ind, item) in list.withIndex()) {
-                                if (ind == position) {
-                                    list[ind] =
-                                        item.copy(isRotating = !item.isRotating)
-                                    list[ind] =
-                                        item.copy(isResumed = false)
-                                } else {
-                                    list[ind] = item.copy(isRotating = false)
-                                }
-                            }
-                            adapter.submitList(list)
-                        }
-                    } catch (e: Exception) {
-                    }
-                } else {
-
-                }
-            }
-        } else {
-            for ((ind, item) in adapter.currentList.withIndex()) {
-                if (ind == position) {
-                    list[ind] = item.copy(isRotating = !item.isRotating)
-                    list[ind] = item.copy(isResumed = true)
-                } else {
-                    list[ind] = item.copy(isRotating = false)
-                }
-            }
-            player.pause()
-            adapter.submitList(list)
         }
     }
 

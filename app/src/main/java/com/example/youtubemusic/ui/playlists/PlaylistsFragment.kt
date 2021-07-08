@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.youtubemusic.R
+import com.example.youtubemusic.ui.base.BaseFragment
 
-class PlaylistsFragment : Fragment() {
+class PlaylistsFragment : BaseFragment() {
 
     private lateinit var playlistsViewModel: PlaylistsViewModel
 

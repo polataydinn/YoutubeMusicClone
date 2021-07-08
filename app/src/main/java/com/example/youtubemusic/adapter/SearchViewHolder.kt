@@ -34,7 +34,7 @@ class SearchViewHolder(private val binding: CardItemSongsBinding) :
             binding.play.setImageResource(R.drawable.ic_baseline_pause_24)
         } else {
             binding.songThumbnail.clearAnimation()
-            binding.play.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            binding.play.setImageResource(R.drawable.ic_baseline_play_arrow_24_white)
         }
     }
 }
