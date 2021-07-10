@@ -3,38 +3,38 @@ package com.example.youtubemusic.adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.youtubemusic.constant.Const
-import com.example.youtubemusic.databinding.CardItemSongsBinding
 import com.example.youtubemusic.models.Item
 import com.example.youtubemusic.R
+import com.example.youtubemusic.databinding.NewCardItemBinding
 
 
-class SearchViewHolder(private val binding: CardItemSongsBinding) :
+class SearchViewHolder(private val binding: NewCardItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Item, onItemClickListener: (Int, Int) -> Unit) {
-        binding.title.text = item.snippet?.title
-        Glide.with(binding.songThumbnail).load(item.snippet?.thumbnails?.high?.url)
-            .diskCacheStrategy(DiskCacheStrategy.DATA).into(binding.songThumbnail)
+        binding.searchTitle.text = item.snippet?.title
+        Glide.with(binding.searchImage).load(item.snippet?.thumbnails?.high?.url)
+            .diskCacheStrategy(DiskCacheStrategy.DATA).into(binding.searchImage)
+
+        binding.searchSinger.text = item.snippet?.channelTitle
 
         binding.apply {
-            download.setOnClickListener {
+            searchDownloadButton.setOnClickListener {
                 onItemClickListener(bindingAdapterPosition, 0)
             }
-            play.setOnClickListener {
+            searchPlayButton.setOnClickListener {
+
                 onItemClickListener(bindingAdapterPosition, 1)
             }
-            addPlaylist.setOnClickListener {
+            searchAddPlaylist.setOnClickListener {
                 onItemClickListener(bindingAdapterPosition, 2)
             }
         }
-        binding.songThumbnail.animation = Const.rotationAnimation
-        if (item.isRotating){
-            binding.songThumbnail.startAnimation(Const.rotationAnimation)
-            binding.play.setImageResource(R.drawable.ic_baseline_pause_24)
+
+        if (item.isPlaying) {
+            binding.searchPlayButton.setImageResource(R.drawable.ic_baseline_pause_24)
         } else {
-            binding.songThumbnail.clearAnimation()
-            binding.play.setImageResource(R.drawable.ic_baseline_play_arrow_24_white)
+            binding.searchPlayButton.setImageResource(R.drawable.ic_baseline_play_arrow_24_white)
         }
     }
 }

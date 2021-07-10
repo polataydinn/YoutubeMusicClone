@@ -28,12 +28,6 @@ class PlaySongFragment : BaseFragment() {
         return binding.root
     }
 
-    private fun getDuration(i: Int): String {
-        val sec = i % 60
-        val min = i % 60 * 60
-        val hour = i % 60 * 60 * 60
-        return "${hour}:${min}:${sec}"
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

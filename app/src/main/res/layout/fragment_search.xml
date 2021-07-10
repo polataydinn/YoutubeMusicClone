@@ -42,6 +42,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context=".ui.search.SearchFragment"
         tools:itemCount="5"
-        tools:listitem="@layout/card_item_songs" />
+        tools:listitem="@layout/new_card_item" />
 
 </LinearLayout>

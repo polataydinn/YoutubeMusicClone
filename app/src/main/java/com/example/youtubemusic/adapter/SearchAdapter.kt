@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.youtubemusic.databinding.CardItemSongsBinding
+import com.example.youtubemusic.databinding.NewCardItemBinding
 import com.example.youtubemusic.models.Item
 
 class SearchAdapter(val onItemClickListener: (Int,Int) -> Unit) : ListAdapter<Item,SearchViewHolder>(DiffCallBack()){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        val binding = CardItemSongsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = NewCardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SearchViewHolder(binding)
     }
 
