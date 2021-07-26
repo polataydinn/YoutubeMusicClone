@@ -18,6 +18,7 @@ import com.example.youtubemusic.service.Request
 import java.util.*
 import android.view.KeyEvent
 import android.view.View.VISIBLE
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
@@ -55,10 +56,10 @@ class SearchFragment : BaseFragment() {
             passDataInterface.onDataRecieved(item)
             when (case) {
                 0 -> {
-
+                    downloadSong(list[position],requireContext())
                 }
                 1 -> {
-                    playSong(list, position,adapter,requireContext())
+                    playSong(list, position, adapter, requireContext())
                     val image = activity?.findViewById<ImageView>(R.id.bottomSongImage)
                     val bottomPlayer: RelativeLayout =
                         activity?.findViewById(R.id.bottomPlayerController)!!
@@ -78,11 +79,13 @@ class SearchFragment : BaseFragment() {
 
 
         binding.searchButton.setOnClickListener {
+            it.hideKeyboard()
             getListOfSearch()
         }
 
         binding.searchEditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                view.hideKeyboard()
                 getListOfSearch()
                 true
             } else {
@@ -97,6 +100,9 @@ class SearchFragment : BaseFragment() {
     private fun getListOfSearch() {
         val songName = binding.searchEditText.text.toString()
         Request.getSongs(songName) {
+            it.forEach {
+                it.uuid = UUID.randomUUID().toString()
+            }
             (activity as MainActivity).listOfSongs = it
             adapter.submitList(it)
         }
@@ -108,5 +114,11 @@ class SearchFragment : BaseFragment() {
         if (context is PassDataInterface) {
             passDataInterface = context
         }
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }

@@ -2,7 +2,6 @@ package com.example.youtubemusic.models
 
 
 import android.os.Parcelable
-import com.example.youtubemusic.extentiton.MetaData
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
@@ -19,7 +18,5 @@ data class Item (
     val snippet: Snippet?,
     val isPlaying: Boolean = false,
     val isResumed: Boolean = false,
-    var isFavorite: Int? = 56,
-) : Parcelable{
-    val metaData: MetaData get() = MetaData(title = snippet?.title.toString())
-}
+    var uuid: String
+) : Parcelable

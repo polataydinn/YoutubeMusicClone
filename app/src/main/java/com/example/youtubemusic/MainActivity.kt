@@ -1,7 +1,8 @@
 package com.example.youtubemusic
 
 import android.Manifest
-import android.content.DialogInterface
+import android.app.DownloadManager
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View.INVISIBLE
@@ -20,9 +21,7 @@ import com.example.youtubemusic.models.Item
 import com.example.youtubemusic.ui.search.SearchFragmentDirections
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import java.sql.Time
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
+
 
 class MainActivity : AppCompatActivity(), PassDataInterface {
 
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity(), PassDataInterface {
     var songLenght : String? = null
     private var item: Item? = null
     var player: MediaPlayer = MediaPlayer()
+    lateinit var downloadManager : DownloadManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), PassDataInterface {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
         setUserPermission()
+        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val bottomPlayer: RelativeLayout = findViewById(R.id.bottomPlayerController)
         bottomPlayer.visibility = INVISIBLE
 
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity(), PassDataInterface {
             }?.let { it2 -> navController.navigate(it2) }
         }
     }
+
+
 
     private fun setUserPermission() {
         Dexter.withContext(this)
