@@ -47,7 +47,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun downloadSong(item: Item, context: Context) {
-        val currentVideoLink = BASEURL + item.id?.videoId
+        val currentVideoLink = BASEURL + item._id?.videoId
         getYoutubeDownloader(currentVideoLink, context) { songUrl ->
             val request = DownloadManager.Request(Uri.parse(songUrl))
             request.setTitle(item.snippet?.title + ".mp3")
@@ -75,7 +75,7 @@ open class BaseFragment : Fragment() {
             playSong(list, position, adapter, context)
         } else if (!(activity as MainActivity).player.isPlaying) {
             tempData = list[position].uuid
-            val currentVideoLink = BASEURL + list[position].id?.videoId
+            val currentVideoLink = BASEURL + list[position]._id?.videoId
             getYoutubeDownloader(currentVideoLink, context) { audioUrl ->
                 if (list[position].isResumed && tempData == list[position].uuid) {
                     (activity as MainActivity).player.start()

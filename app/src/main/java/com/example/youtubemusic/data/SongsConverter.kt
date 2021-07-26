@@ -1,17 +1,19 @@
 package com.example.youtubemusic.data
 
 import androidx.room.TypeConverter
-import com.example.youtubemusic.models.Source
-import com.example.youtubemusic.models.Thumbnails
+import com.example.youtubemusic.models.*
+import com.google.gson.Gson
 
 class SongsConverter {
     @TypeConverter
-    fun fromString(source: Source): Thumbnails {
-        return source.name
-    }
+    fun fromId(id: Id): String = Gson().toJson(id)
 
     @TypeConverter
-    fun toString(name: String): Thumbnails {
-        return Source(name,name)
-    }
+    fun toId(id: String): Id = Gson().fromJson(id, Id::class.java)
+
+    @TypeConverter
+    fun fromSnippet(snippet: Snippet): String = Gson().toJson(snippet)
+
+    @TypeConverter
+    fun toSnippet(snippet: String) : Snippet = Gson().fromJson(snippet, Snippet::class.java)
 }

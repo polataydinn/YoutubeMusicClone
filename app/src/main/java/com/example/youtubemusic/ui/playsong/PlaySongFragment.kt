@@ -61,7 +61,7 @@ class PlaySongFragment : BaseFragment() {
             (activity as MainActivity).player.reset()
             (activity as MainActivity).position = (activity as MainActivity).position?.plus(1)
             var youtubeLink =
-                BASEURL + (activity as MainActivity).listOfSongs?.get((activity as MainActivity).position!!)?.id?.videoId
+                BASEURL + (activity as MainActivity).listOfSongs?.get((activity as MainActivity).position!!)?._id?.videoId
             getYoutubeDownloader(youtubeLink, requireContext()) {
                 (activity as MainActivity).player.setDataSource(it)
                 (activity as MainActivity).player.prepare()
@@ -74,7 +74,7 @@ class PlaySongFragment : BaseFragment() {
             (activity as MainActivity).player.reset()
             (activity as MainActivity).position = (activity as MainActivity).position?.minus(1)
             var youtubeLink =
-                BASEURL + (activity as MainActivity).listOfSongs?.get((activity as MainActivity).position!!)?.id?.videoId
+                BASEURL + (activity as MainActivity).listOfSongs?.get((activity as MainActivity).position!!)?._id?.videoId
             getYoutubeDownloader(youtubeLink, requireContext()) {
                 (activity as MainActivity).player.setDataSource(it)
                 (activity as MainActivity).player.prepare()

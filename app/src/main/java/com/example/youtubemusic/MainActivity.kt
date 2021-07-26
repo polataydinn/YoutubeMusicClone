@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity(), PassDataInterface {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
         setUserPermission()
+
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val bottomPlayer: RelativeLayout = findViewById(R.id.bottomPlayerController)
         bottomPlayer.visibility = INVISIBLE

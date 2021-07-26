@@ -23,7 +23,7 @@ class SearchAdapter(val onItemClickListener: (Int,Int) -> Unit) : ListAdapter<It
 
     class DiffCallBack : DiffUtil.ItemCallback<Item>() {
         override fun areItemsTheSame(oldItem: Item, newItem: Item) =
-            oldItem.id == newItem.id
+            oldItem._id == newItem._id
 
 
         override fun areContentsTheSame(oldItem: Item, newItem: Item) =
