@@ -1,17 +1,10 @@
 package com.example.youtubemusic.ui.search
 
 import android.content.Context
-import android.media.AudioManager
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import at.huber.youtubeExtractor.VideoMeta
-import at.huber.youtubeExtractor.YouTubeExtractor
-import at.huber.youtubeExtractor.YtFile
 import com.example.youtubemusic.adapter.SearchAdapter
 import com.example.youtubemusic.databinding.FragmentSearchBinding
 import com.example.youtubemusic.service.Request
@@ -25,17 +18,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.youtubemusic.MainActivity
 import com.example.youtubemusic.R
+import com.example.youtubemusic.data.SongsRepository
 import com.example.youtubemusic.interfaces.PassDataInterface
+import com.example.youtubemusic.interfaces.PassSongUri
 import com.example.youtubemusic.models.Item
 import com.example.youtubemusic.ui.base.BaseFragment
 
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : BaseFragment(),PassSongUri {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: SearchAdapter
     private lateinit var passDataInterface: PassDataInterface
+    private lateinit var fileUri : String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -120,5 +116,11 @@ class SearchFragment : BaseFragment() {
         val inputManager =
             context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    suspend fun insertToDB(item: Item) = SongsRepository.addSongsToDB(item)
+
+    override fun onSongDownloaded(songUri: String) {
+        fileUri = songUri
     }
 }

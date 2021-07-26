@@ -2,11 +2,14 @@ package com.example.youtubemusic.ui.base
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Environment
 import android.util.SparseArray
+import android.webkit.DownloadListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import at.huber.youtubeExtractor.VideoMeta
@@ -43,19 +46,25 @@ open class BaseFragment : Fragment() {
         }.extract(youtubeLink, true, true)
     }
 
-    fun downloadSong(item: Item,context: Context){
+    fun downloadSong(item: Item, context: Context) {
         val currentVideoLink = BASEURL + item.id?.videoId
-        getYoutubeDownloader(currentVideoLink,context){songUrl ->
+        getYoutubeDownloader(currentVideoLink, context) { songUrl ->
             val request = DownloadManager.Request(Uri.parse(songUrl))
             request.setTitle(item.snippet?.title + ".mp3")
             request.setDescription("Your Song is Downloading..")
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,item.snippet?.title)
-
+            request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                item.snippet?.title
+            )
             (activity as MainActivity).downloadManager.enqueue(request)
+
             Toast.makeText(context, "Your Download is Started", Toast.LENGTH_SHORT).show()
         }
+
+
     }
+
 
     fun playSong(list: ArrayList<Item>, position: Int, adapter: SearchAdapter, context: Context) {
         if ((activity as MainActivity).player.isPlaying &&
@@ -71,7 +80,7 @@ open class BaseFragment : Fragment() {
                 if (list[position].isResumed && tempData == list[position].uuid) {
                     (activity as MainActivity).player.start()
                     updateList(list, position, adapter)
-                    updateResumedList(list,position,adapter)
+                    updateResumedList(list, position, adapter)
                 }
                 if (!(activity as MainActivity).player.isPlaying && !list[position].isResumed
                 ) {
@@ -93,7 +102,7 @@ open class BaseFragment : Fragment() {
         } else {
             (activity as MainActivity).player.pause()
             updateList(list, position, adapter)
-            updateResumedList(list,position,adapter)
+            updateResumedList(list, position, adapter)
         }
     }
 
@@ -131,15 +140,14 @@ open class BaseFragment : Fragment() {
         adapter.submitList(list)
     }
 
-    fun updateResumedList(list: ArrayList<Item>,position: Int,adapter: SearchAdapter){
-        for ((ind, item) in list.withIndex()){
-            if (ind == position){
+    fun updateResumedList(list: ArrayList<Item>, position: Int, adapter: SearchAdapter) {
+        for ((ind, item) in list.withIndex()) {
+            if (ind == position) {
                 list[ind] = item.copy(isResumed = !item.isResumed)
-            }else{
+            } else {
                 list[ind] == item.copy(isResumed = false)
             }
         }
         adapter.submitList(list)
     }
-
 }

@@ -3,9 +3,7 @@ package com.example.youtubemusic.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class Snippet(
     @SerializedName("channelId")
     val channelId: String?,
@@ -23,4 +21,4 @@ data class Snippet(
     val thumbnails: Thumbnails?,
     @SerializedName("title")
     val title: String?
-) : Parcelable
+)
