@@ -3,9 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1F1F2D"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.mysongs.MySongsFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/downloadedSongs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 

@@ -2,21 +2,24 @@ package com.example.youtubemusic.ui.base
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Environment
 import android.util.SparseArray
-import android.webkit.DownloadListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import at.huber.youtubeExtractor.VideoMeta
 import at.huber.youtubeExtractor.YouTubeExtractor
 import at.huber.youtubeExtractor.YtFile
+import com.example.youtubemusic.DownloadBroadCastReceiver
 import com.example.youtubemusic.MainActivity
-import com.example.youtubemusic.adapter.SearchAdapter
+import com.example.youtubemusic.adapter.searchAdapter.SearchAdapter
+import com.example.youtubemusic.data.SongsRepository
+import com.example.youtubemusic.interfaces.PassDataInterface
+import com.example.youtubemusic.models.DownloadedFile
 import com.example.youtubemusic.models.Item
 import java.util.*
 
@@ -25,6 +28,15 @@ open class BaseFragment : Fragment() {
 
     private val BASEURL = "https://www.youtube.com/watch?v="
     var tempData: String? = null
+    private lateinit var passDataInterface: PassDataInterface
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is PassDataInterface) {
+            passDataInterface = context
+        }
+    }
 
     @SuppressLint("StaticFieldLeak")
     fun getYoutubeDownloader(youtubeLink: String, context: Context, onResponse: (String) -> Unit) {
@@ -57,12 +69,16 @@ open class BaseFragment : Fragment() {
                 Environment.DIRECTORY_DOWNLOADS,
                 item.snippet?.title
             )
-            (activity as MainActivity).downloadManager.enqueue(request)
+            val id = (activity as MainActivity).downloadManager.enqueue(request)
+            val broadCastReceiver = DownloadBroadCastReceiver(id){uri ->
+                val downloadedFile = DownloadedFile(uri.toString(),item.snippet?.title!!, item.snippet.channelTitle!!,item.uuid)
+                onSongDownloaded(downloadedFile)
+            }
 
+            requireActivity().registerReceiver(broadCastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            passDataInterface.onPlayerRecieved((activity as MainActivity).downloadManager)
             Toast.makeText(context, "Your Download is Started", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
 
@@ -149,5 +165,14 @@ open class BaseFragment : Fragment() {
             }
         }
         adapter.submitList(list)
+    }
+
+    suspend fun insertToDB(downloadedFile: DownloadedFile) = SongsRepository.addSongsToDB(downloadedFile)
+
+    fun onSongDownloaded(downloadedFile: DownloadedFile) {
+        lifecycleScope.launchWhenStarted {
+            insertToDB(downloadedFile)
+        }
+        Toast.makeText(context, "File Added to DB", Toast.LENGTH_SHORT).show()
     }
 }

@@ -16,7 +16,6 @@ class PlaySongFragment : BaseFragment() {
 
     private var _binding: FragmentPlaySongBinding? = null
     private val binding get() = _binding!!
-    private val args by navArgs<PlaySongFragmentArgs>()
     private val BASEURL = "https://www.youtube.com/watch?v="
 
     override fun onCreateView(
@@ -83,8 +82,9 @@ class PlaySongFragment : BaseFragment() {
         }
 
 
-        Glide.with(binding.playSongImage).load(args.songItem.snippet?.thumbnails?.high?.url)
-            .diskCacheStrategy(DiskCacheStrategy.DATA).into(binding.playSongImage)
-
+//        Glide.with(binding.playSongImage).load(args.songItem.snippet?.thumbnails?.high?.url)
+//            .diskCacheStrategy(DiskCacheStrategy.DATA).into(binding.playSongImage)
+//
+//    }
     }
 }

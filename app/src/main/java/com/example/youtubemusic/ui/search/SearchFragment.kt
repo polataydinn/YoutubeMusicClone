@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.youtubemusic.adapter.SearchAdapter
+import com.example.youtubemusic.adapter.searchAdapter.SearchAdapter
 import com.example.youtubemusic.databinding.FragmentSearchBinding
 import com.example.youtubemusic.service.Request
 import java.util.*
@@ -18,20 +18,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.youtubemusic.MainActivity
 import com.example.youtubemusic.R
-import com.example.youtubemusic.data.SongsRepository
 import com.example.youtubemusic.interfaces.PassDataInterface
-import com.example.youtubemusic.interfaces.PassSongUri
 import com.example.youtubemusic.models.Item
 import com.example.youtubemusic.ui.base.BaseFragment
 
 
-class SearchFragment : BaseFragment(),PassSongUri {
+class SearchFragment : BaseFragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: SearchAdapter
     private lateinit var passDataInterface: PassDataInterface
-    private lateinit var fileUri : String
+    private lateinit var fileUri: String
+    private lateinit var currentItem: Item
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +51,8 @@ class SearchFragment : BaseFragment(),PassSongUri {
             passDataInterface.onDataRecieved(item)
             when (case) {
                 0 -> {
-                    downloadSong(list[position],requireContext())
+                    currentItem = list[position]
+                    downloadSong(list[position], requireContext())
                 }
                 1 -> {
                     playSong(list, position, adapter, requireContext())
@@ -118,9 +118,4 @@ class SearchFragment : BaseFragment(),PassSongUri {
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    suspend fun insertToDB(item: Item) = SongsRepository.addSongsToDB(item)
-
-    override fun onSongDownloaded(songUri: String) {
-        fileUri = songUri
-    }
 }

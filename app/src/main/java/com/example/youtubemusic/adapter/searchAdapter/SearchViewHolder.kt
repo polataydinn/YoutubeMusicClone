@@ -1,4 +1,4 @@
-package com.example.youtubemusic.adapter
+package com.example.youtubemusic.adapter.searchAdapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

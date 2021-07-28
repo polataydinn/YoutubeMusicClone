@@ -1,5 +1,6 @@
 package com.example.youtubemusic.data
 
+import com.example.youtubemusic.models.DownloadedFile
 import com.example.youtubemusic.models.Item
 
 object SongsRepository {
@@ -7,7 +8,9 @@ object SongsRepository {
         SongsDatabase.getDatabase()?.dao()
     }
 
-    suspend fun addSongsToDB(item : Item){
-        songsDao?.addSongs(item)
+    suspend fun addSongsToDB(downloadedFile: DownloadedFile ){
+        songsDao?.addSongs(downloadedFile)
     }
+
+    fun readAllSongs() = songsDao?.getAllColumns()
 }
