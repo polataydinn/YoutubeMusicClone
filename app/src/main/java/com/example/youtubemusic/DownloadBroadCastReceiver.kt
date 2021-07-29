@@ -5,9 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.example.youtubemusic.app.App
-import com.example.youtubemusic.interfaces.PassDownloadManager
-import com.example.youtubemusic.interfaces.PassSongUri
 
 class DownloadBroadCastReceiver(val downloadId: Long, val onComplete: (Uri) -> Unit) : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

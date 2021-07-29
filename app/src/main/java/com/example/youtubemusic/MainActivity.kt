@@ -3,7 +3,6 @@ package com.example.youtubemusic
 import android.Manifest
 import android.app.DownloadManager
 import android.content.Context
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View.INVISIBLE
@@ -14,15 +13,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.youtubemusic.app.App
 import com.example.youtubemusic.databinding.ActivityMainBinding
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.example.youtubemusic.interfaces.PassDataInterface
-import com.example.youtubemusic.interfaces.PassDownloadManager
 import com.example.youtubemusic.models.Item
-import com.example.youtubemusic.ui.base.BaseFragment
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 

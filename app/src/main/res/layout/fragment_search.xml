@@ -14,7 +14,7 @@
         android:layout_marginBottom="16dp"
         android:paddingEnd="16dp">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,6 +23,7 @@
             android:maxLines="1"
             android:imeOptions="actionSearch"
             android:paddingStart="20dp"
+            android:completionThreshold="1"
             tools:text="polat alemdar" />
 
         <ImageView

@@ -5,9 +5,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object Client {
-
-    val baseUrl = "https://www.googleapis.com/"
+object SuggestionClient {
+    val baseUrl = "http://suggestqueries.google.com/"
 
     val retrofit by lazy {
         Retrofit.Builder()

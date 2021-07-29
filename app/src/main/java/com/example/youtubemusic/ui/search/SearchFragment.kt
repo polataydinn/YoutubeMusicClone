@@ -14,6 +14,7 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.youtubemusic.MainActivity
@@ -29,20 +30,24 @@ class SearchFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: SearchAdapter
     private lateinit var passDataInterface: PassDataInterface
-    private lateinit var fileUri: String
     private lateinit var currentItem: Item
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Request.getSuggestions("mahmut"){
+            Toast.makeText(context, "dos", Toast.LENGTH_SHORT).show()
+            println()
+        }
 
         adapter = SearchAdapter { position, case ->
             (activity as MainActivity).position = position
