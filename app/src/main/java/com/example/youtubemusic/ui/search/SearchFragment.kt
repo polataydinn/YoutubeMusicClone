@@ -83,6 +83,7 @@ class SearchFragment : BaseFragment() {
 
         binding.searchButton.setOnClickListener {
             it.hideKeyboard()
+            binding.searchEditText.dismissDropDown()
             getListOfSearch()
         }
 
@@ -123,6 +124,7 @@ class SearchFragment : BaseFragment() {
         binding.searchEditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 view.hideKeyboard()
+                binding.searchEditText.dismissDropDown()
                 getListOfSearch()
                 true
             } else {
