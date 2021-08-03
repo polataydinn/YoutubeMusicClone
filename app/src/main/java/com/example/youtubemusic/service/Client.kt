@@ -7,9 +7,9 @@ import java.util.concurrent.TimeUnit
 
 object Client {
 
-    val baseUrl = "https://www.googleapis.com/"
+    private const val baseUrl = "https://www.googleapis.com/"
 
-    val retrofit by lazy {
+    val retrofit:Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(

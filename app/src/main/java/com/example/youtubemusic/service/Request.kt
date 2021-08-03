@@ -10,7 +10,7 @@ import retrofit2.Response
 
 object Request {
     fun getSongs(songName: String, onResponse: (List<Item>) -> Unit) {
-        Client.retrofit?.let { retrofit ->
+        Client.retrofit.let {
             Client.api.getSongs(songName).enqueue(object : Callback<Results> {
                 override fun onResponse(call: Call<Results>, response: Response<Results>) {
                     response.body()?.items?.let(onResponse)
@@ -24,7 +24,7 @@ object Request {
     }
 
     fun getSuggestions(searchWord: String, onResponse: (SearchSuggestion?) -> Unit){
-        SuggestionClient.retrofit?.let {
+        SuggestionClient.retrofit.let {
             SuggestionClient.api.getSuggestions(searchWord).enqueue(object :
                 Callback<SearchSuggestion> {
                 override fun onResponse(

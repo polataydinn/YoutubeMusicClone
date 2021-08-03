@@ -1,13 +1,20 @@
 package com.example.youtubemusic.ui.search
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.youtubemusic.models.Item
+import com.example.youtubemusic.service.Request
+import java.util.*
 
 class SearchViewModel : ViewModel() {
+    val songList = MutableLiveData<List<Item>>()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun getListOfSearch(songName: String) {
+        Request.getSongs(songName) {
+            it.forEach {
+                it.uuid = UUID.randomUUID().toString()
+            }
+            songList.postValue(it)
+        }
     }
-    val text: LiveData<String> = _text
 }

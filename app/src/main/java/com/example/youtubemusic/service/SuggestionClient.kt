@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 object SuggestionClient {
     val baseUrl = "http://suggestqueries.google.com/"
 
-    val retrofit by lazy {
+    val retrofit:Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(

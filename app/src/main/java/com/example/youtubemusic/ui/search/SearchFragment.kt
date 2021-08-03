@@ -15,6 +15,8 @@ import android.view.KeyEvent
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.youtubemusic.MainActivity
@@ -32,7 +34,8 @@ class SearchFragment : BaseFragment() {
     private lateinit var adapter: SearchAdapter
     private lateinit var passDataInterface: PassDataInterface
     private lateinit var currentItem: Item
-    private val listOfSuggestion: ArrayList<String> = arrayListOf<String>()
+    private lateinit var viewModel: SearchViewModel
+    private val listOfSuggestion: ArrayList<String> = arrayListOf()
     private lateinit var suggestionAdapter: ArrayAdapter<String>
 
     override fun onCreateView(
@@ -47,9 +50,8 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Request.getSuggestions("mahmut") {
-            ((it?.get(1) as ArrayList<*>).get(6) as ArrayList<*>).get(0)
-        }
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+
 
         adapter = SearchAdapter { position, case ->
             (activity as MainActivity).position = position
@@ -79,12 +81,18 @@ class SearchFragment : BaseFragment() {
             }
         }
 
+        lifecycleScope.launchWhenStarted {
+            viewModel.songList.observe(viewLifecycleOwner){
+                adapter.submitList(it)
+            }
+        }
+
 
 
         binding.searchButton.setOnClickListener {
             it.hideKeyboard()
             binding.searchEditText.dismissDropDown()
-            getListOfSearch()
+            getListOfSearch(binding.searchEditText.text.toString())
         }
 
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
@@ -114,8 +122,8 @@ class SearchFragment : BaseFragment() {
             }
         })
 
-        binding.searchEditText.setOnItemClickListener { parent, view, position, id ->
-            getListOfSearch()
+        binding.searchEditText.setOnItemClickListener { parent, _, position, id ->
+            getListOfSearch(binding.searchEditText.text.toString())
         }
 
 
@@ -125,7 +133,7 @@ class SearchFragment : BaseFragment() {
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 view.hideKeyboard()
                 binding.searchEditText.dismissDropDown()
-                getListOfSearch()
+                getListOfSearch(binding.searchEditText.text.toString())
                 true
             } else {
                 false
@@ -136,15 +144,13 @@ class SearchFragment : BaseFragment() {
 
     }
 
-    private fun getListOfSearch() {
-        val songName = binding.searchEditText.text.toString()
-        Request.getSongs(songName) {
-            it.forEach {
-                it.uuid = UUID.randomUUID().toString()
-            }
-            (activity as MainActivity).listOfSongs = it
-            adapter.submitList(it)
-        }
+    private fun getListOfSearch(songName: String) {
+       viewModel.apply {
+           getListOfSearch(songName)
+           songList.observe(viewLifecycleOwner){
+
+           }
+       }
     }
 
     override fun onAttach(context: Context) {
