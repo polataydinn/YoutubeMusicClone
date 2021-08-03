@@ -2,6 +2,8 @@ package com.example.youtubemusic.ui.search
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +14,7 @@ import java.util.*
 import android.view.KeyEvent
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.youtubemusic.MainActivity
@@ -22,6 +22,7 @@ import com.example.youtubemusic.R
 import com.example.youtubemusic.interfaces.PassDataInterface
 import com.example.youtubemusic.models.Item
 import com.example.youtubemusic.ui.base.BaseFragment
+import kotlin.collections.ArrayList
 
 
 class SearchFragment : BaseFragment() {
@@ -31,6 +32,8 @@ class SearchFragment : BaseFragment() {
     private lateinit var adapter: SearchAdapter
     private lateinit var passDataInterface: PassDataInterface
     private lateinit var currentItem: Item
+    private val listOfSuggestion: ArrayList<String> = arrayListOf<String>()
+    private lateinit var suggestionAdapter: ArrayAdapter<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +47,8 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Request.getSuggestions("mahmut"){
-            Toast.makeText(context, "dos", Toast.LENGTH_SHORT).show()
-            println()
+        Request.getSuggestions("mahmut") {
+            ((it?.get(1) as ArrayList<*>).get(6) as ArrayList<*>).get(0)
         }
 
         adapter = SearchAdapter { position, case ->
@@ -83,6 +85,40 @@ class SearchFragment : BaseFragment() {
             it.hideKeyboard()
             getListOfSearch()
         }
+
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Request.getSuggestions(binding.searchEditText.text.toString()) {
+                    listOfSuggestion.clear()
+                    for (item: Int in 0..(it?.get(1) as ArrayList<*>).size - 1) {
+                        listOfSuggestion.add(
+                            ((it[1] as ArrayList<*>).get(item) as ArrayList<*>).get(
+                                0
+                            ) as String
+                        )
+                    }
+                    suggestionAdapter = ArrayAdapter<String>(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        listOfSuggestion
+                    )
+                    binding.searchEditText.setAdapter(suggestionAdapter)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
+        binding.searchEditText.setOnItemClickListener { parent, view, position, id ->
+            getListOfSearch()
+        }
+
+
+
 
         binding.searchEditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
